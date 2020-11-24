@@ -1,8 +1,9 @@
-<?php
+<?php 
+
 
 class Auth {
     private $salt = '6YHgdb45P';
-
+   
     //Constructor
 
     function __construct(){}
@@ -11,9 +12,9 @@ class Auth {
 
     function validateLogin($user, $pass){
         //access db
-        global $Database;
+        global $CMS;
         //create db query
-        if ($stmt = $Database->prepare("SELECT * FROM users WHERE username = ? AND password = ?")){
+        if ($stmt = $CMS->Database->prepare("SELECT * FROM users WHERE username = ? AND password = ?")){
             $stmt->bind_param("ss", $user, md5($pass . $this->salt));
             $stmt->execute();
             $stmt->store_result();
@@ -39,6 +40,15 @@ class Auth {
             return false;
         }
     }
+
+    function checkAuthorization(){
+        include('init.php'); 
+        if ($this->checkLoginStatus() == false){
+            $CMS->Template->error('unauthorized');
+            exit;
+        }
+    }
+
     function logout(){
         session_destroy();
         session_start();

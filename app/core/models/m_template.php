@@ -23,8 +23,12 @@ class Template{
 
     /*Get and Set*/
 
-    function setData($name, $value){
-        $this->data[$name] = htmlentities($value, ENT_QUOTES);
+    function setData($name, $value, $clean = true){
+        if ($clean){
+            $this->data[$name] = htmlentities($value, ENT_QUOTES);
+        }else{
+            $this->data[$name] = $value;
+        }        
     }
 
     function getData($name){
@@ -58,5 +62,18 @@ class Template{
             }
         }
         return $data;
+    }
+    function error($type = '', $message = ''){
+        if ($type = 'unauthorized'){
+            $this->load(APP_PATH . 'core/views/v_unauthorized.php');
+        }else{
+            if ($message != ''){
+                $this->setData('message', $message);
+            }
+            else{
+                $this->setData('message', "Error. Please contact the administrator");
+            }
+            $this->load(APP_PATH . 'core/views/v_error.php');
+        }
     }
 }

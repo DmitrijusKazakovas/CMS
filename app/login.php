@@ -15,14 +15,14 @@ if (isset($_POST['username']))
 		if ($_POST['username'] == '') { $CMS->Template->setData('error_user', 'required'); }
 		if ($_POST['password'] == '') { $CMS->Template->setData('error_pass', 'required'); }
 		$CMS->Template->setAlert('Please fill in all required fields', 'error');
-		echo '<script type="text/javascript">jQuery.colorbox.resize();</script>';
+		echo '<script>jQuery.colorbox.resize();</script>';
 		$CMS->Template->load(APP_PATH . "core/views/v_login.php");
 	}
 	else if ($CMS->Auth->validateLogin($CMS->Template->getData('input_user'), $CMS->Template->getData('input_pass')) == FALSE)
 	{
 		// invalid login
 		$CMS->Template->setAlert('Invalid username or password!', 'error');
-		echo '<script type="text/javascript">jQuery.colorbox.resize();</script>';
+		echo '<script>jQuery.colorbox.resize();</script>';
 		$CMS->Template->load(APP_PATH . "core/views/v_login.php");
 	}
 	else

@@ -20,20 +20,20 @@
     </div>
 
     <ul id="nav">
-        <li> <a href="">Home</a> </li>
-        <li> <a href="">Link</a> </li>
-        <li> <a href="">Link2</a> </li>
-        <li> <a href="">Contacts</a> </li>
+        <li> <a href="#">Home</a> </li>
+        <li> <a href="#">Link</a> </li>
+        <li> <a href="#">Link2</a> </li>
+        <li> <a href="#">Contacts</a> </li>
     </ul>
 
     <div id="content">
         <div class="left">
-            <h2>Header</h2>
-            <p>Text</p>
+            <h2><?php $CMS->Cms->display_block('content-header', 'oneline'); ?></h2>
+            <?php $CMS->Cms->display_block('content-maincontent'); ?>
         </div>
         <div class="right">
-            <p>Text</p>
-            <p>Text</p>
+            <?php $CMS->Cms->display_block('content-quote'); ?>
+            <?php $CMS->Cms->display_block('content-attribution'); ?>
         </div>
     </div>
 

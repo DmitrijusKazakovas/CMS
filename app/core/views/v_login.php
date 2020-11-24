@@ -1,16 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log in</title>
-    <link rel="stylesheet" href="views/style.css">
-</head>
-<body>
-    <h1> Log In </h1>
-    <div id="content">
+<script>
+    jQuery(document).ready(function($){
+        $('#login').submit(function(e){
+            e.preventDefault();
 
-    <form action="" method="POST">
+            var username = $('input#username').val();
+            var password = $('input#password').val();
+            
+            var dataString = 'username=' + username + '&password=' + password;
+
+            $.ajax({
+                type: "POST", 
+                url: "<?php echo SITE_PATH; ?>app/login.php",
+                data: dataString,
+                cache: false,
+                success: function(html){
+                    alert(html);
+                    $('#cboxLoadedContent').html(html);
+                }
+            });
+        });
+        $('#cms_cancel').live('click', function(e){
+            e.preventDefault();
+            $.colorbox.close();
+            var page = window.location.href;
+            page = page.substring(0, page.lastIndexOf('?'));
+            window.location = page;
+        });
+    });
+</script>
+
+<div id="cms_wrapper">
+    <h1> CMS Log In </h1>
+    <div id="cms_content">
+
+    <form action="" method="POST" id="login">
         <div>
         <?php 
           $alerts = $this->getAlerts();
@@ -18,21 +41,21 @@
          ?>
             <div class="row">
                 <label for="username">Username: *</label>
-                <input type="text" name="username" value="<?php echo $this->getData ('input_user')?>">
-                <div class="error"><?php echo $this->getData ('error_user'); ?></div>
+                <input type="text" id="username" name="username" value="<?php echo $this->getData ('input_user');?>" 
+                class="<?php echo $this->getData ('error_user');?>">
+                
             </div>
             <div class="row">
                 <label for="password">Password: *</label>
-                <input type="password" name="password" value="<?php echo $this->getData ('input_pass')?>">
-                <div class="error"><?php echo $this->getData ('error_pass'); ?></div>
+                <input type="password" id="password" name="password" value="<?php echo $this->getData ('input_pass');?>"
+                class="<?php echo $this->getData ('error_pass'); ?>">
+                
             </div>
-            <div class="row">
-                <p class="required">* required</p>
-                <input type="submit" name="submit" class="submit" value="submit">
+            <div class="row submitrow">
+                <input type="submit" name="submit" class="submit" value="Log in">
+                &nbsp;<a href="#" id="cms_cancel">Cancel</a>
             </div>
         </div>
-
     </form>       
     </div>
-</body>
-</html>
+</div>
